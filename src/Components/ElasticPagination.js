@@ -12,6 +12,7 @@ export default class ElasticPagination extends Component {
 
     this.state = {
       isPopoverOpen: false,
+      value: 50,
     };
   }
 
@@ -29,6 +30,9 @@ export default class ElasticPagination extends Component {
 
   changePage(key) {
     let { changePagination } = this.props;
+    this.setState({
+      value: key,
+    });
     changePagination(key);
   }
 
@@ -36,12 +40,12 @@ export default class ElasticPagination extends Component {
     const button = (
       <EuiButtonEmpty
         size="s"
-        color="white"
+        style={{color:'black'}}
         iconType="arrowDown"
         iconSide="right"
         onClick={this.onButtonClick}
       >
-        Rows per page: 50
+        Rows per page: {this.state.value}
       </EuiButtonEmpty>
     );
     const items = [
@@ -83,7 +87,7 @@ export default class ElasticPagination extends Component {
       </EuiContextMenuItem>,
       <EuiContextMenuItem
         key="50"
-        icon="check"
+        icon="empty"
         onClick={() => {
           this.changePage(50);
         }}

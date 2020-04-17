@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { EuiPopover, EuiButtonToggle, EuiButtonIcon } from "@elastic/eui";
+import {
+  EuiPopover,
+  EuiButtonToggle,
+  EuiFlexGroup,
+  EuiButtonIcon,
+  EuiFlexItem,
+} from "@elastic/eui";
 
 export default class ElasticPopOver extends Component {
   constructor(props) {
@@ -7,7 +13,7 @@ export default class ElasticPopOver extends Component {
 
     this.state = {
       isOpen: false,
-      field: [],
+      fields: [],
     };
   }
 
@@ -17,18 +23,18 @@ export default class ElasticPopOver extends Component {
     });
   };
 
-  hideOrShow(fields) {
+  hideOrShow(field) {
     let { hideOrShowField } = this.props;
-    let arr = this.state.field;
-    if (arr[0].hasOwnProperty(fields)) {
-      let val = arr[0][fields];
-      if (val === true) arr[0][fields] = false;
-      else arr[0][fields] = true;
+    let arr = this.state.fields;
+    if (arr[0].hasOwnProperty(field)) {
+      let val = arr[0][field];
+      if (val === true) arr[0][field] = false;
+      else arr[0][field] = true;
     }
     this.setState({
       field: arr,
     });
-    hideOrShowField(fields, arr[0][fields]);
+    hideOrShowField(field, arr[0][field]);
   }
 
   onButtonClick = () => {
@@ -45,13 +51,13 @@ export default class ElasticPopOver extends Component {
       obj[ele.field] = val;
     });
     this.setState({
-      field: [obj],
+      fields: [obj],
     });
   }
 
   render() {
     const { column } = this.props;
-    let arr = this.state.field;
+    let arr = this.state.fields;
     return (
       <div>
         <EuiPopover
@@ -71,16 +77,20 @@ export default class ElasticPopOver extends Component {
               val = arr[0][ele.field];
             }
             return (
-              <div style={{ display: "flex" }}>
-                <p>{ele.headerName}</p>
-                <EuiButtonToggle
-                  iconType={val ? "eye" : "eyeClosed"}
-                  onChange={() => this.hideOrShow(ele.field)}
-                  isSelected={this.state.isEye}
-                  isEmpty
-                  isIconOnly
-                />
-              </div>
+              <EuiFlexGroup>
+                <EuiFlexItem>
+                  <EuiButtonToggle
+                    iconType={val ? "eye" : "eyeClosed"}
+                    onChange={() => this.hideOrShow(ele.field)}
+                    isSelected={this.state.isEye}
+                    isEmpty
+                    isIconOnly
+                  />
+                </EuiFlexItem>
+                <EuiFlexItem>
+                  <h1>{ele.headerName}</h1>
+                </EuiFlexItem>
+              </EuiFlexGroup>
             );
           })}
         </EuiPopover>

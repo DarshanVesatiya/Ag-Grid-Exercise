@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 import ElasticButton from "./ElasticButton";
 import ElasticComboBox from "./ElasticComboBox";
 import ElasticPopOver from "./ElasticPopOver";
 import ElasticPagination from "./ElasticPagination";
+import { EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiFieldSearch } from "@elastic/eui";
 
 export default class AgGridTable extends Component {
   constructor(props) {
@@ -32,12 +34,16 @@ export default class AgGridTable extends Component {
             refs: this,
             callRef: this.callBack,
           },
-        },
+        },{
+            headerName:"temp",
+            field:"temp"
+        }
       ],
       defaultColDef: {
         resizable: true,
         editable: true,
         sortable: true,
+        filter:true
       },
       rowData: [],
       gridApi: "",
@@ -86,24 +92,30 @@ export default class AgGridTable extends Component {
   render() {
     return (
       <>
-        <div style={{ display: "flex", justifyContent: "spaceBetween" }}>
-          <input
-            style={{ marginLeft: "-25rem" }}
-            type="text"
-            id="filter-text-box"
-            placeholder="Search in table"
-            onInput={this.onFilterTextBoxChanged}
-          />
-          <ElasticPopOver
-            column={this.state.columnDefs}
-            hideOrShowField={this.hideOrShow}
-          />
-        </div>
+        <EuiFlexGroup justifyContent="spaceBetween">
+          <EuiFlexItem grow={false}>
+            <EuiFieldSearch
+              type="text"
+              id="filter-text-box"
+              placeholder="Search in table"
+              onInput={this.onFilterTextBoxChanged}
+            />
+          </EuiFlexItem>
+          <EuiFlexItem grow={false}>
+            <ElasticPopOver
+              column={this.state.columnDefs}
+              hideOrShowField={this.hideOrShow}
+              style={{ float: "right" }}
+            />
+          </EuiFlexItem>
+        </EuiFlexGroup>
+        <EuiSpacer />
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine-dark"
           style={{
             height: "400px",
-            width: "800px",
+            width: "100%",
+            float: "center",
           }}
         >
           <AgGridReact

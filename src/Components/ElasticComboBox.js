@@ -5,7 +5,11 @@ import {
   EuiModalBody,
   EuiOverlayMask,
   EuiButtonIcon,
+  EuiFlexGroup,
 } from "@elastic/eui";
+import { euiPaletteColorBlindBehindText } from '@elastic/eui/lib/services';
+
+const visColorsBehindText = euiPaletteColorBlindBehindText();
 
 export default class ElasticComboBox extends Component {
   constructor(props) {
@@ -14,36 +18,46 @@ export default class ElasticComboBox extends Component {
     this.state = {
       options: [
         {
-          label: "Titan",
-          "data-test-subj": "titanOption",
+          label: 'Titan',
+          'data-test-subj': 'titanOption',
+          color: visColorsBehindText[0],
         },
         {
-          label: "Enceladus",
+          label: 'Enceladus',
+          color: visColorsBehindText[1],
         },
         {
-          label: "Mimas",
+          label: 'Mimas',
+          color: visColorsBehindText[2],
         },
         {
-          label: "Dione",
+          label: 'Dione',
+          color: visColorsBehindText[3],
         },
         {
-          label: "Iapetus",
+          label: 'Iapetus',
+          color: visColorsBehindText[4],
         },
         {
-          label: "Phoebe",
+          label: 'Phoebe',
+          color: visColorsBehindText[5],
         },
         {
-          label: "Rhea",
+          label: 'Rhea',
+          color: visColorsBehindText[6],
         },
         {
           label:
             "Pandora is one of Saturn's moons, named for a Titaness of Greek mythology",
+          color: visColorsBehindText[7],
         },
         {
-          label: "Tethys",
+          label: 'Tethys',
+          color: visColorsBehindText[8],
         },
         {
-          label: "Hyperion",
+          label: 'Hyperion',
+          color: visColorsBehindText[9],
         },
       ],
       selectedOptions: [],
@@ -90,7 +104,8 @@ export default class ElasticComboBox extends Component {
 
     if (
       flattenedOptions.findIndex(
-        (option) => option.label.trim().toLowerCase() === normalizedSearchValue
+        (options) =>
+          options.label.trim().toLowerCase() === normalizedSearchValue
       ) === -1
     ) {
       this.setState({
@@ -107,8 +122,8 @@ export default class ElasticComboBox extends Component {
   componentDidMount() {
     let { options } = this.state;
     this.setState({
-      selectedOptions: [options[2], options[4]],
-      setSelected: [options[2], options[4]],
+      selectedOptions: [options[2]],
+      setSelected: [options[2]],
     });
   }
 
@@ -136,8 +151,13 @@ export default class ElasticComboBox extends Component {
     }
     return (
       <div>
-        {comboBox}
-        <EuiButtonIcon iconType="pen" onClick={this.showModal}></EuiButtonIcon>
+        <EuiFlexGroup>
+          {comboBox}
+          <EuiButtonIcon
+            iconType="plusInCircle"
+            onClick={this.showModal}
+          ></EuiButtonIcon>
+        </EuiFlexGroup>
         {modal}
       </div>
     );

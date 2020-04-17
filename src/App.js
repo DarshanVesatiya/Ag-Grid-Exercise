@@ -2,15 +2,18 @@ import React from 'react';
 import './App.css';
 import AgGridTable from './Components/AgGridTable';
 import '@elastic/eui/dist/eui_theme_light.css'
-
+import { EuiTitle, EuiSpacer, EuiHeader } from '@elastic/eui'; 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Ag-Grid Table</h1>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <EuiHeader position="static" sections={[
+        {
+          items:[ <EuiTitle size="l"><h1  style={{color:'#006BB4'}}>AG-GRID TABLE</h1></EuiTitle>]
+        }
+      ]}>
+        </EuiHeader>
+        <EuiSpacer />
         <AgGridTable />
-      </header>
     </div>
   );
 }
